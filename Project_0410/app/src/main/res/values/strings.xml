@@ -1,0 +1,8 @@
+<resources>
+    <string name="form_title">台 北 市 立 聯 合 醫 院</string>
+    <string name="app_name">勞工問卷</string>
+    <string name="left_button"><![CDATA[<-]]></string>
+    <string name="right_button"><![CDATA[->]]></string>
+    <string name="title">標題</string>
+    <string name="enter_button">送出</string>
+</resources>

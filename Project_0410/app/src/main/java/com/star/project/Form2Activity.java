@@ -51,6 +51,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Form2Activity extends AppCompatActivity {
     // Store question list, each element is a ArrayList Object, each ArrayList Object's element is a Model Object.
@@ -379,6 +381,7 @@ public class Form2Activity extends AppCompatActivity {
             TextView textView = (TextView) questionView.findViewById(R.id.textView);
             textView.setText(question.getName_tw());
             final EditText editText = (EditText) questionView.findViewById(R.id.editText);
+            //telephone check
             if (question.getId().equals(" TELMO")) {
                 editText.setInputType(InputType.TYPE_CLASS_PHONE);
                 editText.setHint("例：0912345678");
@@ -397,10 +400,18 @@ public class Form2Activity extends AppCompatActivity {
                             editText.setError("請輸入10碼");
                             b_right.setEnabled(false);
                         } else {
-                            b_right.setEnabled(true);
-                            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                            editText.clearFocus();
+                            Pattern pattern = Pattern.compile("(09)+[\\d]{8}");
+                            Matcher matcher = pattern.matcher(editText.getText());
+                            if(matcher.find()) {
+
+                                b_right.setEnabled(true);
+                                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+                                editText.clearFocus();
+                            }else {
+                                editText.setError("請輸入正確格式");
+                                b_right.setEnabled(false);
+                            }
                         }
                     }
 

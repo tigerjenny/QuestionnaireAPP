@@ -10,6 +10,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -175,6 +177,10 @@ public class DBstring {
         }
     }
 
+    JSONArray jsonArray = new JSONArray();
+    JSONObject jsonObject = new JSONObject();
+
+
     // Update data
     public void u_executeQuery(String id, ArrayList<ArrayList> pages) {
 
@@ -188,8 +194,13 @@ public class DBstring {
                 for (int j = 0; j < questions.size(); j++) {
                     Model q = questions.get(j);
                     params.add(new BasicNameValuePair(q.getId(), q.getText()));
+
+                    jsonObject.put(q.getId(),q.getText());
                 }
             }
+            jsonArray.put(jsonObject);
+            Log.d("TEXT",String.valueOf(jsonArray));
+
             Log.d("TT", String.valueOf(params));
             httpPost.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
             HttpResponse httpResponse = httpClient.execute(httpPost);
